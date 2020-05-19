@@ -313,7 +313,25 @@
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/count.js"></script>
+  <!-- <script src="assets/js/count.js"></script> -->
+  <script>
+    const xhr = new XMLHttpRequest(); 
+    const container = document.getElementById('visits');
+    console.log("WHAT");
+
+    xhr.onload = function() {
+      if (this.status === 200) {
+        var json = JSON.parse(this.response);
+        container.innerHTML = json.visitors;
+      } else {
+        container.innerHTML = "NO RESPONSE";
+        console.warn('No 200 ok response); ')
+      }
+    }
+
+    xhr.open('get', 'https://lthyucqeeg.execute-api.ap-northeast-2.amazonaws.com/Prod/visitors');
+    xhr.send();
+  </script>
 
 </body>
 
