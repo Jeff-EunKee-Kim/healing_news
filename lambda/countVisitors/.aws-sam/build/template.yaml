@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: "countVisitors\nCounts number of visitors to our website \n"
+Globals:
+  Function:
+    Timeout: 5
+Resources:
+  CountVisitorsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CountVisitorsFunction
+      Handler: count-visitors
+      Runtime: go1.x
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /visit
+            Method: GET
+      Environment:
+        Variables:
+          PARAM1: VALUE
+Outputs:
+  CountVisitorsAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/visit/
+  CountVisitorsFunction:
+    Description: First Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - CountVisitorsFunction
+      - Arn
+  CountVisitorsFunctionIamRole:
+    Description: Implicit IAM Role created for Count Visitors function
+    Value:
+      Fn::GetAtt:
+      - CountVisitorsFunctionRole
+      - Arn
