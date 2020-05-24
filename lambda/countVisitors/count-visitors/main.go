@@ -96,6 +96,8 @@ func handler() (Response, error) {
 
 	}
 
+	fmt.Println("Returning message")
+
 	return Response{
 		Message:    fmt.Sprintf("Incremented visitor count by 1"),
 		StatusCode: 200,
